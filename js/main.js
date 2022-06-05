@@ -32,4 +32,4 @@ const checkStringLength = function (string, maxLength) {
   return string.length <= maxLength;
 };
 
-checkStringLength("Test comment", 9);
+checkStringLength('Test comment', 9);
