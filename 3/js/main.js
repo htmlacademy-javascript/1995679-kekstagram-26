@@ -14,19 +14,19 @@ const getRandomNumber = function (min, max) {
   }
 
   if (min % 1 !== 0 || max % 1 !== 0) {
-    if (max - min < 1) {
-      //Проверяем вдруг разница между числами меньше 1, соответственно нет целых чисел в промежутке
-      return;
-    }
     //Округляем числа если они флоаты
     min = Math.ceil(min);
     max = Math.floor(max);
+    if (min > max) {
+      //Если параметры имели одинаковое число перед запятой (а значит не имеют целых чисел в диапазоне), то округления поменяют их местами. Делаем проверку
+      return;
+    }
   }
 
   return Math.floor(Math.random() * (max - min + 1) + min);
 };
 
-getRandomNumber(2.6, 0.9);
+getRandomNumber(2.1, 1.9);
 
 const checkStringLength = function (string, maxLength) {
   return string.length <= maxLength;
