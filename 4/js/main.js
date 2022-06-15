@@ -1,20 +1,22 @@
 // Функция взята из интернета и доработана
 // Источник - https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_random
 
-function getRandomPositiveInteger(a, b) {
-  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
-  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-}
+const getRandomPositiveInteger = (min, max) => {
+  if (max < min) {
+    //Меняем значения местами...
+    const swap = min;
+    min = max;
+    max = swap;
+  }
 
-const checkStringLength = function (string, maxLength) {
-  return string.length <= maxLength;
+  return Math.floor(Math.random() * (max - min + 1) + min);
 };
+
+const checkStringLength = (string, maxLength) => string.length <= maxLength;
 
 checkStringLength('random text', 140);
 
-const messageList = [
+const messages = [
   'Всё отлично!',
   'В целом всё неплохо.',
   'Но не всё.',
@@ -26,7 +28,7 @@ const messageList = [
   'Как можно было поймать такой неудачный момент?!',
 ];
 
-const namesList = [
+const names = [
   'Бакстер Стокман',
   'Бибоп и Рокстеди',
   'Донателло',
@@ -43,48 +45,81 @@ const namesList = [
   'Шреддер',
 ];
 
-function getRandomArrayElement(elements) {
-  return elements[getRandomPositiveInteger(0, elements.length - 1)];
-}
+const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
-function getRandomMessage() {
-  return (
-    `${getRandomArrayElement(messageList)} ${getRandomArrayElement(messageList)}`
-  );
-}
+// const getRandomSentences = () => {
+//   return `${getRandomArrayElement(messages)} ${getRandomArrayElement(
+//     messages
+//   )}`;
+// };
 
-function getPhotoData(i) {
+const shuffle = (elements) => {
+  const shuffledElements = [];
+  const elementsToShuffle = [...elements];
+  while (elementsToShuffle.length) {
+    const randomElement = Math.floor(Math.random() * elementsToShuffle.length);
+    const elementToTake = elementsToShuffle.splice(randomElement, 1);
+    shuffledElements.push(elementToTake[0]);
+  }
+  return shuffledElements;
+};
+
+const getRandomSentences = (sentences, minAmountOfSentences, maxAmountOfSentences) => {
+  const messagesToChoseFrom = shuffle(sentences);
+  messagesToChoseFrom.splice(getRandomPositiveInteger(minAmountOfSentences, maxAmountOfSentences));
+  const result = messagesToChoseFrom.join(' ');
+  return result;
+};
+
+const minLikes = 15;
+const maxLikes = 200;
+
+const minAvatarNumber = 1;
+const maxAvatarNumber = 6;
+
+const minAmountOfMessages = 1;
+const maxAmountOfMessages = 2;
+
+const generateRandomComment = (commentId) => {
+  const comment = {
+    id: commentId,
+    avatar: `img/avatar-${getRandomPositiveInteger(
+      minAvatarNumber,
+      maxAvatarNumber
+    )}.svg`,
+    message: getRandomSentences(messages, minAmountOfMessages, maxAmountOfMessages),
+    name: getRandomArrayElement(names),
+  };
+  return comment;
+};
+
+const getComments = (amountOfComments) => {
+  const comments = [];
+  for (let i = 1; i <= amountOfComments; i++) {
+    comments.push(generateRandomComment(i));
+  }
+  return comments;
+};
+
+const getPhotoData = (photoId, amountOfComments) => {
   const photo = {
-    id: i,
-    url: `photos/${i}.jpg`,
-    description: `Фотография ${i}`,
-    likes: getRandomPositiveInteger(15, 200),
-    comments: [
-      {
-        id: i + 1000,
-        avatar: `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
-        message: getRandomMessage(),
-        name: getRandomArrayElement(namesList),
-      },
-      {
-        id: i + 2000,
-        avatar: `img/avatar-${getRandomPositiveInteger(1, 6)}.svg`,
-        message: getRandomMessage(),
-        name: getRandomArrayElement(namesList),
-      },
-    ],
+    id: photoId,
+    url: `photos/${photoId}.jpg`,
+    description: `Фотография ${photoId}`,
+    likes: getRandomPositiveInteger(minLikes, maxLikes),
+    comments: getComments(amountOfComments),
   };
 
   return photo;
-}
+};
 
-function getPhotoList() {
-  const photosList = [];
+const getPhotos = (amountOfPhotos, amountOfComments) => {
+  const photos = [];
 
-  for (let i = 1; i <= 25; i++) {
-    photosList.push(getPhotoData(i));
+  for (let i = 1; i <= amountOfPhotos; i++) {
+    photos.push(getPhotoData(i, amountOfComments));
   }
-  return photosList;
-}
+  return photos;
+};
 
-const finalList = getPhotoList();
+getPhotos(25, 3);
