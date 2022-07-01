@@ -25,4 +25,4 @@ const shuffle = (elements) => {
   return elements;
 };
 
-export {checkStringLength, getRandomArrayElement, shuffle, getRandomPositiveInteger};
+export { checkStringLength, getRandomArrayElement, shuffle, getRandomPositiveInteger };

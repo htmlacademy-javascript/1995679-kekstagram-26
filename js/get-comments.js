@@ -1,4 +1,4 @@
-import {shuffle, getRandomPositiveInteger, getRandomArrayElement} from './util.js';
+import { shuffle, getRandomPositiveInteger, getRandomArrayElement } from './util.js';
 
 const MIN_AVATAR_NUMBER = 1;
 const MAX_AVATAR_NUMBER = 6;
@@ -63,4 +63,4 @@ const getComments = (amountOfComments) => {
   return comments;
 };
 
-export {getComments};
+export { getComments };

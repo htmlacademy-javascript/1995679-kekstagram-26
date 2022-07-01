@@ -1,3 +1,3 @@
-import {getPhotos} from './get-photos.js';
+import { getPreviews } from './get-previews.js';
 
-getPhotos(25, 2);
+getPreviews(3,2);

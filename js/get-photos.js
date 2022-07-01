@@ -1,8 +1,8 @@
+import { getRandomPositiveInteger } from './util.js';
+import { getComments } from './get-comments.js';
+
 const MIN_LIKES = 15;
 const MAX_LIKES = 200;
-
-import {getRandomPositiveInteger} from './util.js';
-import {getComments} from './get-comments.js';
 
 const getPhotoData = (photoId, amountOfComments) => {
   const photo = {
@@ -25,4 +25,4 @@ const getPhotos = (amountOfPhotos, amountOfComments) => {
   return photos;
 };
 
-export {getPhotos};
+export { getPhotos };
