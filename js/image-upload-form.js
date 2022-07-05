@@ -1,3 +1,5 @@
+import { checkHashtagField } from './check-hashtag.js';
+
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const bodyElement = document.querySelector('body');
 const imgUploadCancelButton = document.querySelector('.img-upload__cancel');
@@ -5,12 +7,16 @@ const imgUploadControl = document.querySelector('.img-upload__input');
 const textHashtags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 const imageUploadForm = document.querySelector('.img-upload__form');
+const errorMessage = document.querySelector('.error-message');
+
+const MAX_AMOUNT_OF_HASHTAGS = 5;
 
 const resetForm = () => {
   imgUploadControl.value = '';
   textHashtags.value = '';
   textDescription.value = '';
-}
+  errorMessage.textContent = '';
+};
 
 const closeUploadForm = () => {
   imgUploadOverlay.classList.add('hidden');
@@ -48,19 +54,23 @@ const imageUploadFormControlHandler = () => {
   });
 };
 
+textHashtags.addEventListener('input', () => {
+  errorMessage.textContent = '';
+});
+
 const pristine = new Pristine(imageUploadForm);
 
 imageUploadForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
-  const isValid = pristine.validate();
-  if (isValid) {
-    console.log('Form is VALID')
-    // imageUploadForm.submit();
+  const formIsValid = pristine.validate();
+  const hashtagsAreValid = checkHashtagField(textHashtags.value, MAX_AMOUNT_OF_HASHTAGS);
+  if (formIsValid && hashtagsAreValid) {
+    imageUploadForm.submit();
   }
   else {
-    console.log('Form is invalid')
+    errorMessage.textContent = `Только уникальные валидные хэштеги, не больше ${MAX_AMOUNT_OF_HASHTAGS}`;
   }
-})
+});
 
 export { imageUploadFormControlHandler };
