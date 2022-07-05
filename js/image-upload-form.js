@@ -4,11 +4,19 @@ const imgUploadCancelButton = document.querySelector('.img-upload__cancel');
 const imgUploadControl = document.querySelector('.img-upload__input');
 const textHashtags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
+const imageUploadForm = document.querySelector('.img-upload__form');
+
+const resetForm = () => {
+  imgUploadControl.value = '';
+  textHashtags.value = '';
+  textDescription.value = '';
+}
 
 const closeUploadForm = () => {
   imgUploadOverlay.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   document.removeEventListener('keydown', onUploadFormEscKeydown);
+  resetForm();
 };
 
 const openUploadForm = () => {
@@ -17,7 +25,7 @@ const openUploadForm = () => {
   document.addEventListener('keydown', onUploadFormEscKeydown);
 };
 
-const onUploadFormEscKeydown = (evt) => {
+function onUploadFormEscKeydown (evt) {
   if (evt.key === 'Escape') {
     evt.preventDefault();
     if (
@@ -27,7 +35,7 @@ const onUploadFormEscKeydown = (evt) => {
       closeUploadForm();
     }
   }
-};
+}
 
 const imageUploadFormControlHandler = () => {
   imgUploadCancelButton.addEventListener('click', () => {
@@ -39,5 +47,20 @@ const imageUploadFormControlHandler = () => {
     openUploadForm();
   });
 };
+
+const pristine = new Pristine(imageUploadForm);
+
+imageUploadForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  const isValid = pristine.validate();
+  if (isValid) {
+    console.log('Form is VALID')
+    // imageUploadForm.submit();
+  }
+  else {
+    console.log('Form is invalid')
+  }
+})
 
 export { imageUploadFormControlHandler };
