@@ -1,5 +1,5 @@
-const hashtagTemplate = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
-const checkHashtagValidity = (hashtag) => hashtagTemplate.test(hashtag);
+const HASGTAG_TEMPLATE = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+const checkHashtagValidity = (hashtag) => HASGTAG_TEMPLATE.test(hashtag);
 
 const checkDuplicates = (elements) => new Set(elements).size === elements.length;
 

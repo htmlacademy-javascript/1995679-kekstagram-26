@@ -1,5 +1,7 @@
 import { checkHashtagField } from './check-hashtag.js';
 
+const MAX_AMOUNT_OF_HASHTAGS = 5;
+
 const imgUploadOverlay = document.querySelector('.img-upload__overlay');
 const bodyElement = document.querySelector('body');
 const imgUploadCancelButton = document.querySelector('.img-upload__cancel');
@@ -8,8 +10,6 @@ const textHashtags = document.querySelector('.text__hashtags');
 const textDescription = document.querySelector('.text__description');
 const imageUploadForm = document.querySelector('.img-upload__form');
 const errorMessage = document.querySelector('.error-message');
-
-const MAX_AMOUNT_OF_HASHTAGS = 5;
 
 const resetForm = () => {
   imgUploadControl.value = '';
