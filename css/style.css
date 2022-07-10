@@ -688,6 +688,10 @@ main {
           filter: brightness(3);
 }
 
+.effect-level__slider {
+  display: none;
+}
+
 
 /**
  * Блок добавления хэштегов и комментария к изображению

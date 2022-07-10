@@ -1,6 +1,6 @@
 const scaleControlValueElement = document.querySelector('.scale__control--value');
 const scaleControlSmallerButton = document.querySelector('.scale__control--smaller');
-const scaleControlBuggerButton = document.querySelector('.scale__control--bigger');
+const scaleControlBiggerButton = document.querySelector('.scale__control--bigger');
 const imageUploadPreviewImageElement = document.querySelector('.img-upload__preview__image');
 
 const INITIAL_SCALE_VALUE = 100;
@@ -27,7 +27,7 @@ const imageScaleControl = () => {
     }
   });
 
-  scaleControlBuggerButton.addEventListener('click', () => {
+  scaleControlBiggerButton.addEventListener('click', () => {
     if (scaleValue < 100) {
       scaleValue += 25;
       scaleControlValueElement.value = `${scaleValue}%`;
