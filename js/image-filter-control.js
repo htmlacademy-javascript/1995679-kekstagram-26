@@ -1,10 +1,3 @@
-const effectsElement = document.querySelector('.effects__list');
-const imageUploadPreviewImageElement = document.querySelector(
-  '.img-upload__preview__image'
-);
-const sliderElement = document.querySelector('.effect-level__slider');
-const effectLevelValueElement = document.querySelector('.effect-level__value');
-
 const FILTER_EFFECTS = {
   'effects__preview--chrome': {
     minValue: 0,
@@ -42,6 +35,13 @@ const FILTER_EFFECTS = {
     typeOfvalue: '',
   },
 };
+
+const effectsElement = document.querySelector('.effects__list');
+const imageUploadPreviewImageElement = document.querySelector(
+  '.img-upload__preview__image'
+);
+const sliderElement = document.querySelector('.effect-level__slider');
+const effectLevelValueElement = document.querySelector('.effect-level__value');
 
 noUiSlider.create(sliderElement, {
   range: {
