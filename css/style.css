@@ -522,27 +522,6 @@ main {
   max-height: 600px;
 }
 
-.image-scale-25{
-  transform: scale(0.25);
-  transition: transform 0.3s;
-}
-
-.image-scale-50{
-  transform: scale(0.50);
-  transition: transform 0.3s;
-}
-
-.image-scale-75{
-  transform: scale(0.75);
-  transition: transform 0.3s;
-}
-
-.image-scale-100{
-  transform: scale(1);
-  transition: transform 0.3s;
-}
-
-
 /**
  * Шкала регулирования глубины фильтра
  */
@@ -687,11 +666,6 @@ main {
   -webkit-filter: brightness(3);
           filter: brightness(3);
 }
-
-.effect-level__slider {
-  display: none;
-}
-
 
 /**
  * Блок добавления хэштегов и комментария к изображению
