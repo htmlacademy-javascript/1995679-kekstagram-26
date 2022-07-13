@@ -1,38 +1,38 @@
 const FILTER_EFFECTS = {
-  'effects__preview--chrome': {
-    minValue: 0,
-    maxValue: 1,
-    stepValue: 0.1,
-    filterValue: 'grayscale',
-    typeOfvalue: '',
+  'chrome': {
+    min: 0,
+    max: 1,
+    step: 0.1,
+    filter: 'grayscale',
+    type: '',
   },
-  'effects__preview--sepia': {
-    minValue: 0,
-    maxValue: 1,
-    stepValue: 0.1,
-    filterValue: 'sepia',
-    typeOfvalue: '',
+  'sepia': {
+    min: 0,
+    max: 1,
+    step: 0.1,
+    filter: 'sepia',
+    type: '',
   },
-  'effects__preview--marvin': {
-    minValue: 0,
-    maxValue: 100,
-    stepValue: 1,
-    filterValue: 'invert',
-    typeOfvalue: '%',
+  'marvin': {
+    min: 0,
+    max: 100,
+    step: 1,
+    filter: 'invert',
+    type: '%',
   },
-  'effects__preview--phobos': {
-    minValue: 0,
-    maxValue: 3,
-    stepValue: 0.1,
-    filterValue: 'blur',
-    typeOfvalue: 'px',
+  'phobos': {
+    min: 0,
+    max: 3,
+    step: 0.1,
+    filter: 'blur',
+    type: 'px',
   },
-  'effects__preview--heat': {
-    minValue: 0,
-    maxValue: 3,
-    stepValue: 0.1,
-    filterValue: 'brightness',
-    typeOfvalue: '',
+  'heat': {
+    min: 0,
+    max: 3,
+    step: 0.1,
+    filter: 'brightness',
+    type: '',
   },
 };
 
@@ -43,19 +43,21 @@ const imageUploadPreviewImageElement = document.querySelector(
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectLevelValueElement = document.querySelector('.effect-level__value');
 
-noUiSlider.create(sliderElement, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 100,
-  step: 10,
-  connect: 'lower',
-});
+const createSlider = (minValue, maxValue, connectType) => {
+  noUiSlider.create(sliderElement, {
+    range: {
+      min: minValue,
+      max: maxValue,
+    },
+    start: maxValue,
+    connect: connectType,
+  });
+};
 
 const applyFilter = (filterName) => {
   const filterNames = Object.keys(FILTER_EFFECTS);
-  imageUploadPreviewImageElement.classList.remove(...filterNames);
+  const filters = filterNames.map((effect) => `effects__preview--${effect}`);
+  imageUploadPreviewImageElement.classList.remove(...filters);
   imageUploadPreviewImageElement.classList.add(
     `effects__preview--${filterName}`
   );
@@ -68,30 +70,28 @@ const changeFilterSettings = (filterName) => {
     sliderElement.classList.add('hidden');
   } else {
     sliderElement.classList.remove('hidden');
-    const effectName = FILTER_EFFECTS[`effects__preview--${filterName}`];
+    const effectName = FILTER_EFFECTS[filterName];
     sliderElement.noUiSlider.updateOptions({
       range: {
-        min: effectName.minValue,
-        max: effectName.maxValue,
+        min: effectName.min,
+        max: effectName.max,
       },
-      step: effectName.stepValue,
+      step: effectName.step,
     });
-    sliderElement.noUiSlider.set(effectName.maxValue);
+    sliderElement.noUiSlider.set(effectName.max);
     sliderElement.noUiSlider.on('update', () => {
       effectLevelValueElement.value = sliderElement.noUiSlider.get();
       imageUploadPreviewImageElement.style.filter = `${
-        effectName.filterValue
-      }(${sliderElement.noUiSlider.get()}${effectName.typeOfvalue})`;
+        effectName.filter
+      }(${sliderElement.noUiSlider.get()}${effectName.type})`;
     });
   }
 };
 
-const imageFilterControl = () => {
+const changeImageFilter = () => {
   effectsElement.addEventListener('change', (evt) => {
     changeFilterSettings(evt.target.value);
-    // toggleImageFilter(evt.target.value);
-    // toggleImageFilterIntensity(evt.target.value);
   });
 };
 
-export { imageFilterControl };
+export { createSlider, changeImageFilter };
