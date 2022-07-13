@@ -9,21 +9,23 @@ const toggleImageScale = (scale) => {
   imageUploadPreviewImageElement.style = `transform: scale(${scale / 100}); transition: transform 0.3s;`;
 };
 
-const changeImageScale = () => {
+const changeImageScale = (min, max, step) => {
   let scaleValue = INITIAL_SCALE_VALUE;
   scaleControlValueElement.value = `${scaleValue}%`;
 
   scaleControlSmallerButton.addEventListener('click', () => {
-    if (scaleValue > 25) {
-      scaleValue -= 25;
+    if (scaleValue > min) {
+      scaleValue -= step;
+      if (scaleValue < min) {scaleValue = min;}
       scaleControlValueElement.value = `${scaleValue}%`;
       toggleImageScale(scaleValue);
     }
   });
 
   scaleControlBiggerButton.addEventListener('click', () => {
-    if (scaleValue < 100) {
-      scaleValue += 25;
+    if (scaleValue < max) {
+      scaleValue += step;
+      if (scaleValue > max) {scaleValue = max;}
       scaleControlValueElement.value = `${scaleValue}%`;
       toggleImageScale(scaleValue);
     }

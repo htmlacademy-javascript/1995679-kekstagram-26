@@ -43,34 +43,29 @@ function onUploadFormEscKeydown (evt) {
   }
 }
 
-const imageUploadFormControlHandler = () => {
-  imgUploadCancelButton.addEventListener('click', () => {
-    closeUploadForm();
+const imageUploadFormControlHandler = (pristine) => {
+  imgUploadCancelButton.addEventListener('click', closeUploadForm);
+  document.addEventListener('keydown', onUploadFormEscKeydown);
+  imgUploadControlElement.addEventListener('change', openUploadForm);
+
+  textHashtagsElement.addEventListener('input', () => {
+    errorMessageElement.textContent = '';
   });
 
-  document.addEventListener('keydown', onUploadFormEscKeydown);
-  imgUploadControlElement.addEventListener('change', () => {
-    openUploadForm();
+  imageUploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    const formIsValid = pristine.validate();
+    if (formIsValid && textHashtagsElement.value === '') {
+      imageUploadForm.submit();
+    }
+    else {
+      const hashtagsAreValid = checkHashtagField(textHashtagsElement.value, MAX_AMOUNT_OF_HASHTAGS);
+      if (formIsValid && hashtagsAreValid) {
+        imageUploadForm.submit();
+      }
+      else {errorMessageElement.textContent = `Только уникальные валидные хэштеги, не больше ${MAX_AMOUNT_OF_HASHTAGS}`;}
+    }
   });
 };
-
-textHashtagsElement.addEventListener('input', () => {
-  errorMessageElement.textContent = '';
-});
-
-const pristine = new Pristine(imageUploadForm);
-
-imageUploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-
-  const formIsValid = pristine.validate();
-  const hashtagsAreValid = checkHashtagField(textHashtagsElement.value, MAX_AMOUNT_OF_HASHTAGS);
-  if (formIsValid && hashtagsAreValid) {
-    imageUploadForm.submit();
-  }
-  else {
-    errorMessageElement.textContent = `Только уникальные валидные хэштеги, не больше ${MAX_AMOUNT_OF_HASHTAGS}`;
-  }
-});
 
 export { imageUploadFormControlHandler };
