@@ -4,14 +4,12 @@ const FILTER_EFFECTS = {
     max: 1,
     step: 0.1,
     filter: 'grayscale',
-    type: '',
   },
   'sepia': {
     min: 0,
     max: 1,
     step: 0.1,
     filter: 'sepia',
-    type: '',
   },
   'marvin': {
     min: 0,
@@ -32,7 +30,6 @@ const FILTER_EFFECTS = {
     max: 3,
     step: 0.1,
     filter: 'brightness',
-    type: '',
   },
 };
 
@@ -42,6 +39,8 @@ const imageUploadPreviewImageElement = document.querySelector(
 );
 const sliderElement = document.querySelector('.effect-level__slider');
 const effectLevelValueElement = document.querySelector('.effect-level__value');
+
+const checkEffectType = (effect) => effect.type ? effect.type : '';
 
 const createSlider = (minValue, maxValue, connectType) => {
   noUiSlider.create(sliderElement, {
@@ -83,7 +82,7 @@ const changeFilterSettings = (filterName) => {
       effectLevelValueElement.value = sliderElement.noUiSlider.get();
       imageUploadPreviewImageElement.style.filter = `${
         effectName.filter
-      }(${sliderElement.noUiSlider.get()}${effectName.type})`;
+      }(${sliderElement.noUiSlider.get()}${checkEffectType(effectName)})`;
     });
   }
 };
