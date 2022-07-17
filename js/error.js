@@ -1,6 +1,5 @@
 const bodyElement = document.querySelector('body');
 const successMessageTemplate = document.querySelector('#error').content;
-// imgUploadOverlayElement = document.querySelector('.img-upload__overlay');
 
 const closeErrorMessage = () => {
   const errorMessage = document.querySelector('.error');
