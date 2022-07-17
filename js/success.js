@@ -13,14 +13,14 @@ function onSuccessMessageEscKedown (evt) {
     evt.preventDefault();
     closeSuccessMessage();
   }
-};
+}
 
 function onSuccessMessageClick (evt) {
   const successMessage = document.querySelector('.success');
   if (evt.target === successMessage) {
     closeSuccessMessage();
   }
-};
+}
 
 const showSuccessMessage = () => {
   const successMessageFragment = document.createDocumentFragment();
@@ -34,4 +34,4 @@ const showSuccessMessage = () => {
   document.addEventListener('click', onSuccessMessageClick);
 };
 
-export { showSuccessMessage }
+export { showSuccessMessage };

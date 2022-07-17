@@ -14,14 +14,14 @@ function onErrorMessageEscKedown (evt) {
     evt.preventDefault();
     closeErrorMessage();
   }
-};
+}
 
 function onErrorMessageClick (evt) {
   const errorMessage = document.querySelector('.error');
   if (evt.target === errorMessage) {
     closeErrorMessage();
   }
-};
+}
 
 const showErrorMessage = () => {
   const errorMessageFragment = document.createDocumentFragment();

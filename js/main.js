@@ -15,6 +15,6 @@ createSlider(0, 1, 'lower');
 changeImageFilter();
 
 getData(
-  (data) => {getPreviews(data)},
-  (error) => {showAlert(`${error} - Не удается подгрузить данные. попробуйте еще`)}
+  (data) => {getPreviews(data);},
+  (error) => {showAlert(`${error} - Не удается подгрузить данные. попробуйте еще`);}
 );

@@ -52,7 +52,7 @@ function onUploadFormEscKeydown (evt) {
       closeUploadForm();
     }
   }
-};
+}
 
 const blockSendButton = () => {
   sendButton.disabled = true;
@@ -77,20 +77,20 @@ const imageUploadFormControlHandler = (pristine) => {
     if (formIsValid && textHashtagsElement.value === '') {
       blockSendButton();
       sendData(
-        () => {closeUploadForm(); showSuccessMessage(); unblockSendButton()},
-        () => {closeUploadFormNoReset(); showErrorMessage(); unblockSendButton()},
+        () => {closeUploadForm(); showSuccessMessage(); unblockSendButton();},
+        () => {closeUploadFormNoReset(); showErrorMessage(); unblockSendButton();},
         formData
-        );
+      );
     }
     else {
       const hashtagsAreValid = checkHashtagField(textHashtagsElement.value, MAX_AMOUNT_OF_HASHTAGS);
       if (formIsValid && hashtagsAreValid) {
         blockSendButton();
         sendData(
-          () => {closeUploadForm(); showSuccessMessage(); unblockSendButton()},
-          () => {closeUploadFormNoReset(); showErrorMessage(); unblockSendButton()},
+          () => {closeUploadForm(); showSuccessMessage(); unblockSendButton();},
+          () => {closeUploadFormNoReset(); showErrorMessage(); unblockSendButton();},
           formData
-          );
+        );
       }
       else {errorMessageElement.textContent = `Только уникальные валидные хэштеги, не больше ${MAX_AMOUNT_OF_HASHTAGS}`;}
     }
