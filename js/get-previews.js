@@ -1,12 +1,31 @@
-import { getPhotos } from './get-photos.js';
-
 const pictureTemplate = document.querySelector('#picture').content;
 const picturesPreviewsElement = document.querySelector('.pictures');
 
-const getPreviews = (amountOfPhotos, amountOfComments) => {
-  const photos = getPhotos(amountOfPhotos, amountOfComments);
+const getPhotoData = (photoData) => {
+  const photo = {
+    id: photoData.id,
+    url: photoData.url,
+    description: photoData.description,
+    likes: photoData.likes,
+    comments: photoData.comments,
+  };
 
-  const photosFragment =  document.createDocumentFragment();
+  return photo;
+};
+
+const getPhotos = (data) => {
+  const photos = [];
+
+  for (let i = 0; i < data.length; i++) {
+    photos.push(getPhotoData(data[i]));
+  }
+  return photos;
+};
+
+const getPreviews = (data) => {
+  const photos = getPhotos(data);
+
+  const photosFragment = document.createDocumentFragment();
 
   photos.forEach((photo) => {
     const pictureElement = pictureTemplate.cloneNode(true);
