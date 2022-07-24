@@ -1,4 +1,4 @@
-import { getPreviews, showImageFilters, setDefaultFilterButtonClick, setRandomFilterButtonClick, setDiscussedFilterButtonClick } from './get-previews.js';
+import { renderPreviews, setApplyFilterButtonClick } from './render-previews.js';
 import { imageUploadFormControlHandler } from './image-upload-form.js';
 import { changeImageScale } from './image-scale-control.js';
 import { createSlider, changeImageFilter } from './image-filter-control.js';
@@ -6,6 +6,7 @@ import { getData } from './api.js';
 import { showAlert } from './alert.js';
 
 const imageUploadForm = document.querySelector('.img-upload__form');
+const imageFiltersControls = document.querySelector('.img-filters');
 const pristine = new Pristine(imageUploadForm);
 
 imageUploadFormControlHandler(pristine);
@@ -16,11 +17,9 @@ changeImageFilter();
 
 getData(
   (data) => {
-    getPreviews(data);
-    showImageFilters();
-    setDefaultFilterButtonClick(data);
-    setRandomFilterButtonClick(data);
-    setDiscussedFilterButtonClick(data);
+    renderPreviews(data);
+    imageFiltersControls.classList.remove('img-filters--inactive');
+    setApplyFilterButtonClick(data);
   },
   (error) => {showAlert(`${error} - Не удается подгрузить данные. попробуйте еще`);}
 );
