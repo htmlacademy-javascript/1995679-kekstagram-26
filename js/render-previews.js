@@ -12,7 +12,7 @@ const pictureTemplate = document.querySelector('#picture').content;
 const picturesPreviewsElement = document.querySelector('.pictures');
 const allFilterButtons = document.querySelectorAll('.img-filters__button');
 
-const getPhotoData = (photoData) => {
+const makePhoto = (photoData) => {
   const photo = {
     id: photoData.id,
     url: photoData.url,
@@ -28,19 +28,15 @@ const getPhotos = (data) => {
   const photos = [];
 
   for (let i = 0; i < data.length; i++) {
-    photos.push(getPhotoData(data[i]));
+    photos.push(makePhoto(data[i]));
   }
   return photos;
 };
 
 function applyRandomFilter (elements) {
-  const shuffledElements = shuffle(elements.slice());
-
-  while (shuffledElements.length > RANDOM_PHOTOS_AMOUNT) {
-    shuffledElements.pop();
-  }
-  return shuffledElements;
+  return shuffle(elements).slice(0, RANDOM_PHOTOS_AMOUNT);
 }
+
 
 function applyDiscussedFilter (elements) {
 

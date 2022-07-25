@@ -1406,3 +1406,8 @@ main {
 .hidden {
   display: none;
 }
+
+.img-upload__preview__image {
+  transform: scale(100%);
+  transition: transform 0.3s;
+}

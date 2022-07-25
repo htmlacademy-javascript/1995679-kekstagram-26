@@ -6,12 +6,13 @@ const scaleControlBiggerButton = document.querySelector('.scale__control--bigger
 const imageUploadPreviewImageElement = document.querySelector('.img-upload__preview__image');
 
 const toggleImageScale = (scale) => {
-  imageUploadPreviewImageElement.style = `transform: scale(${scale / 100}); transition: transform 0.3s;`;
+  imageUploadPreviewImageElement.style.transform = `scale(${scale / 100})`;
 };
 
 const changeImageScale = (min, max, step) => {
   let scaleValue = INITIAL_SCALE_VALUE;
   scaleControlValueElement.value = `${scaleValue}%`;
+  toggleImageScale(scaleValue);
 
   scaleControlSmallerButton.addEventListener('click', () => {
     if (scaleValue > min) {
