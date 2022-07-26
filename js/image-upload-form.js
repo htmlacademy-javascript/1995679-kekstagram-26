@@ -2,7 +2,7 @@ import { checkHashtagField } from './check-hashtag.js';
 import { sendData } from './api.js';
 import { showSuccessMessage } from './success.js';
 import { showErrorMessage } from './error.js';
-import { changeImageScale } from './image-scale-control.js';
+import { changeImageScaleControl, resetImageScaleControl } from './image-scale-control.js';
 import { changeImageFilter } from './image-filter-control.js';
 
 const MAX_AMOUNT_OF_HASHTAGS = 5;
@@ -27,6 +27,7 @@ const resetForm = () => {
   textDescriptionElement.value = '';
   errorMessageElement.textContent = '';
   defaultEffectRadioElement.checked = true;
+  resetImageScaleControl();
 };
 
 const closeUploadForm = () => {
@@ -48,7 +49,6 @@ const openUploadForm = () => {
   bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', onUploadFormEscKeydown);
   changeImageFilter();
-  changeImageScale(MIN_SCALE_VALUE, MAX_SCALE_VALUE, SCALE_VALUE_STEP);
 };
 
 function onUploadFormEscKeydown (evt) {
@@ -72,6 +72,8 @@ const unblockSendButton = () => {
 };
 
 const imageUploadFormControlHandler = (pristine) => {
+  changeImageScaleControl(MIN_SCALE_VALUE, MAX_SCALE_VALUE, SCALE_VALUE_STEP);
+
   imgUploadCancelButton.addEventListener('click', closeUploadForm);
   document.addEventListener('keydown', onUploadFormEscKeydown);
   imgUploadControlElement.addEventListener('change', openUploadForm);
