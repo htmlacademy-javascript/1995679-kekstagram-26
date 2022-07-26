@@ -88,6 +88,9 @@ const changeFilterSettings = (filterName) => {
 };
 
 const changeImageFilter = () => {
+  applyFilter('none');
+  imageUploadPreviewImageElement.style.filter = '';
+  sliderElement.classList.add('hidden');
   effectsElement.addEventListener('change', (evt) => {
     changeFilterSettings(evt.target.value);
   });
