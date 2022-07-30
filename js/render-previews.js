@@ -1,6 +1,10 @@
 import { shuffle } from './util.js';
+import { openPreviewForm, showChosenPicture } from './show-big-picture.js';
 
 const RANDOM_PHOTOS_AMOUNT = 10;
+const RENDER_DELAY = 500;
+
+let timeoutId;
 
 const FILTERS = {
   'default': null,
@@ -62,6 +66,7 @@ const renderPreviews = (data, filter) => {
       const url = pictureElement.querySelector('img');
       const likes = pictureElement.querySelector('.picture__likes');
       const comments = pictureElement.querySelector('.picture__comments');
+      pictureElement.querySelector('.picture').dataset.id = photo.id;
       url.src = photo.url;
       likes.textContent = photo.likes;
       comments.textContent = photo.comments.length;
@@ -69,28 +74,38 @@ const renderPreviews = (data, filter) => {
     });
 
   picturesPreviewsElement.appendChild(photosFragment);
-};
+  const allPreviews = document.querySelectorAll('.picture');
 
-const changeActiveFilterButton = (button) => {
-  allFilterButtons.forEach((buttonElement) => {
-    if (buttonElement.classList.contains('img-filters__button--active')) {
-      buttonElement.classList.remove('img-filters__button--active');
-    }
+  allPreviews.forEach((preview) => {
+    preview.addEventListener('click', (evt) => {
+      evt.preventDefault();
+      openPreviewForm();
+      showChosenPicture(preview, data);
+    });
   });
-  button.classList.add('img-filters__button--active');
-};
 
-const setApplyFilterButtonClick = (data) => {
+  const changeActiveFilterButton = (button) => {
+    allFilterButtons.forEach((buttonElement) => {
+      if (buttonElement.classList.contains('img-filters__button--active')) {
+        buttonElement.classList.remove('img-filters__button--active');
+      }
+    });
+    button.classList.add('img-filters__button--active');
+  };
 
   allFilterButtons.forEach((button) => {
     button.addEventListener('click', (evt) => {
-      const filter = evt.target.dataset.sort;
-      const allPreviews = document.querySelectorAll('.picture');
       changeActiveFilterButton(evt.target);
-      allPreviews.forEach((preview) => {preview.remove();});
-      renderPreviews(data, FILTERS[filter]);
+
+      clearTimeout(timeoutId);
+
+      timeoutId = setTimeout(() =>{
+        const chosenFilter = evt.target.dataset.sort;
+        allPreviews.forEach((preview) => {preview.remove();});
+        renderPreviews(data, FILTERS[chosenFilter]);
+      }, RENDER_DELAY);
     });
   });
 };
 
-export { renderPreviews, setApplyFilterButtonClick };
+export { renderPreviews };

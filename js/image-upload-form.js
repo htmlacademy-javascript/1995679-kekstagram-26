@@ -37,13 +37,6 @@ const closeUploadForm = () => {
   resetForm();
 };
 
-const closeUploadFormNoReset = () => {
-  imgUploadOverlayElement.classList.add('hidden');
-  bodyElement.classList.remove('modal-open');
-  document.removeEventListener('keydown', onUploadFormEscKeydown);
-  imgUploadControlElement.value = '';
-};
-
 const openUploadForm = () => {
   imgUploadOverlayElement.classList.remove('hidden');
   bodyElement.classList.add('modal-open');
@@ -89,7 +82,7 @@ const imageUploadFormControlHandler = (pristine) => {
       blockSendButton();
       sendData(
         () => {closeUploadForm(); showSuccessMessage(); unblockSendButton();},
-        () => {closeUploadFormNoReset(); showErrorMessage(); unblockSendButton();},
+        () => {showErrorMessage(); unblockSendButton();},
         formData
       );
     }
@@ -99,7 +92,7 @@ const imageUploadFormControlHandler = (pristine) => {
         blockSendButton();
         sendData(
           () => {closeUploadForm(); showSuccessMessage(); unblockSendButton();},
-          () => {closeUploadFormNoReset(); showErrorMessage(); unblockSendButton();},
+          () => {showErrorMessage(); unblockSendButton();},
           formData
         );
       }
