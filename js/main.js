@@ -12,15 +12,14 @@ const pristine = new Pristine(imageUploadForm);
 
 imageUploadFormControlHandler(pristine);
 createSlider(0, 1, 'lower');
-
 uploadPhoto();
+setLoadMoreCommentsButtonClick();
+setCloseBiPictureButtonClick();
 
 getData(
   (data) => {
     renderPreviews(data);
     imageFiltersControls.classList.remove('img-filters--inactive');
-    setLoadMoreCommentsButtonClick();
-    setCloseBiPictureButtonClick();
   },
   (error) => {showAlert(`${error} - Не удается подгрузить данные. попробуйте еще`);}
 );

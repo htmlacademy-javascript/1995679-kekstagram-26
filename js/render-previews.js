@@ -2,6 +2,9 @@ import { shuffle } from './util.js';
 import { openPreviewForm, showChosenPicture } from './show-big-picture.js';
 
 const RANDOM_PHOTOS_AMOUNT = 10;
+const RENDER_DELAY = 500;
+
+let timeoutId;
 
 const FILTERS = {
   'default': null,
@@ -78,7 +81,7 @@ const renderPreviews = (data, filter) => {
       evt.preventDefault();
       openPreviewForm();
       showChosenPicture(preview, data);
-    })
+    });
   });
 
   const changeActiveFilterButton = (button) => {
@@ -92,11 +95,15 @@ const renderPreviews = (data, filter) => {
 
   allFilterButtons.forEach((button) => {
     button.addEventListener('click', (evt) => {
-      const filter = evt.target.dataset.sort;
-      const allPreviews = document.querySelectorAll('.picture');
       changeActiveFilterButton(evt.target);
-      allPreviews.forEach((preview) => {preview.remove();});
-      renderPreviews(data, FILTERS[filter]);
+
+      clearTimeout(timeoutId);
+
+      timeoutId = setTimeout(() =>{
+        const chosenFilter = evt.target.dataset.sort;
+        allPreviews.forEach((preview) => {preview.remove();});
+        renderPreviews(data, FILTERS[chosenFilter]);
+      }, RENDER_DELAY);
     });
   });
 };

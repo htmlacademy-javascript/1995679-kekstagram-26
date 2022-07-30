@@ -9,9 +9,7 @@ const uploadPhoto = () => {
     const photo = photoChooser.files[0];
     const fileName = photo.name.toLowerCase();
 
-    const matches = FILE_TYPES.some((it) => {
-      return fileName.endsWith(it);
-    });
+    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
 
     if (matches) {
       preview.src = URL.createObjectURL(photo);

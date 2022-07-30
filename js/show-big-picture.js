@@ -20,9 +20,10 @@ const loadSomeComments = (elements, amount) => {
 
   if (elements.length === 0) {
     loadMoreCommentsButton.classList.add('hidden');
-  };
+  }
 
-  return commentsToLoad};
+  return commentsToLoad;
+};
 
 function onUploadFormEscKeydown (evt) {
   if (evt.key === 'Escape') {
@@ -31,14 +32,14 @@ function onUploadFormEscKeydown (evt) {
   }
 }
 
-const closePreviewForm = () => {
+function closePreviewForm () {
   bigPictureElement.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
   bigPictureCommentsElement.innerHTML = '';
   commentsCounter = 0;
   loadedCommentsCountElement.textContent = commentsCounter;
   document.removeEventListener('keydown', onUploadFormEscKeydown);
-};
+}
 
 const openPreviewForm = () => {
   bigPictureElement.classList.remove('hidden');
@@ -48,19 +49,18 @@ const openPreviewForm = () => {
 };
 
 const renderComments = (elements) => {
-
   const commentsFragment = document.createDocumentFragment();
 
   elements
-  .forEach((comment) => {
-    const commentElement = commentTemplate.cloneNode(true);
-    const author = commentElement.querySelector('.social__picture');
-    const commentText = commentElement.querySelector('.social__text');
-    author.src = comment.avatar;
-    author.alt = comment.name;
-    commentText.textContent = comment.message;
-    commentsFragment.appendChild(commentElement);
-  });
+    .forEach((comment) => {
+      const commentElement = commentTemplate.cloneNode(true);
+      const author = commentElement.querySelector('.social__picture');
+      const commentText = commentElement.querySelector('.social__text');
+      author.src = comment.avatar;
+      author.alt = comment.name;
+      commentText.textContent = comment.message;
+      commentsFragment.appendChild(commentElement);
+    });
 
   bigPictureCommentsElement.appendChild(commentsFragment);
 
@@ -75,14 +75,12 @@ const showChosenPicture = (photo, data) => {
   socialCaption.textContent = data[photo.dataset.id].description;
   bigPictureCommentsCountElement.textContent = data[photo.dataset.id].comments.length;
 
-  const findPictureData = (elements) => {
-    return elements.find(element => element.id.toString() === photo.dataset.id);
-  };
+  const findPictureData = (elements) => elements.find((element) => element.id.toString() === photo.dataset.id);
 
   const pictureData = findPictureData(data);
   comments = pictureData.comments.slice();
 
-  const loadedComments = loadSomeComments(comments, AMOUNT_OF_COMMENTS_PER_LOAD)
+  const loadedComments = loadSomeComments(comments, AMOUNT_OF_COMMENTS_PER_LOAD);
 
   renderComments(loadedComments);
 
